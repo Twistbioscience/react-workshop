@@ -63,8 +63,7 @@ const initialState = {
     snake: INITIAL_SNAKE,
     apple: INITIAL_APPLE,
     gameOver: false,
-    level: INITIAL_LEVEL,
-    direction: INITIAL_DIRECTION
+    level: INITIAL_LEVEL
   }
 
 const levels = [{length: 0, delay: 500}, {length: 8, delay: 400}, {length: 10, delay: 200}, {length: 12, delay: 100}, {length: 15, delay: 50}];
@@ -75,10 +74,10 @@ function App() {
   const nextDirection = useRef(INITIAL_DIRECTION);
 
   const setDirection = ({key: directionEvent}) => {
-    if (HORIZONTAL_MOVMENT.includes(state.direction) && [EVENT_UP, EVENT_DOWN].includes(directionEvent)) {
+    if (HORIZONTAL_MOVMENT.includes(nextDirection.current) && [EVENT_UP, EVENT_DOWN].includes(directionEvent)) {
       nextDirection.current = EVENT_DIRECTION[directionEvent]
     }
-    if (VERTICAL_MOVMENT.includes(state.direction) && [EVENT_RIGHT, EVENT_LEFT].includes(directionEvent)) {
+    if (VERTICAL_MOVMENT.includes(nextDirection.current) && [EVENT_RIGHT, EVENT_LEFT].includes(directionEvent)) {
       nextDirection.current = EVENT_DIRECTION[directionEvent]
     }
   }
@@ -100,7 +99,7 @@ function App() {
     } else {
       renderTimer = setTimeout(() => {
         const isAppleEaten = hasCollision(apple, snake);
-        const newSnake = updateSnake(snake, state.direction, isAppleEaten);
+        const newSnake = updateSnake(snake, nextDirection.current, isAppleEaten);
         setState({
           ...state,
           snake: newSnake,
