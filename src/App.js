@@ -3,7 +3,7 @@ import Game from './Game';
 import './App.css';
 
 
-const MAP_SIZE = 10;
+const MAP_SIZE = 20;
 const UP = 'UP';
 const DOWN = 'DOWN';
 const LEFT = 'LEFT';
@@ -63,7 +63,8 @@ const initialState = {
     snake: INITIAL_SNAKE,
     apple: INITIAL_APPLE,
     gameOver: false,
-    level: 0
+    level: INITIAL_LEVEL,
+    direction: INITIAL_DIRECTION
   }
 
 const levels = [{length: 0, delay: 500}, {length: 8, delay: 400}, {length: 10, delay: 200}, {length: 12, delay: 100}, {length: 15, delay: 50}];
@@ -72,13 +73,12 @@ function App() {
   const [state, setState] = useState(initialState)
   const {snake, apple, level} = state;
   const nextDirection = useRef(INITIAL_DIRECTION);
-  const refreshTimer = useRef(null);
 
   const setDirection = ({key: directionEvent}) => {
-    if (HORIZONTAL_MOVMENT.includes(nextDirection.current) && [EVENT_UP, EVENT_DOWN].includes(directionEvent)) {
+    if (HORIZONTAL_MOVMENT.includes(state.direction) && [EVENT_UP, EVENT_DOWN].includes(directionEvent)) {
       nextDirection.current = EVENT_DIRECTION[directionEvent]
     }
-    if (VERTICAL_MOVMENT.includes(nextDirection.current) && [EVENT_RIGHT, EVENT_LEFT].includes(directionEvent)) {
+    if (VERTICAL_MOVMENT.includes(state.direction) && [EVENT_RIGHT, EVENT_LEFT].includes(directionEvent)) {
       nextDirection.current = EVENT_DIRECTION[directionEvent]
     }
   }
@@ -94,21 +94,22 @@ function App() {
 
   // Handle movment
   useEffect(() => {
-    clearTimeout(refreshTimer.current);
+    let renderTimer = null;
     if (hasCollision(snake[0], snake.slice(1))) {
       setState({...state, gameOver: true});
     } else {
-      console.log(level);
-      console.log(levels[level].delay);
-      refreshTimer.current = setTimeout(() => {
+      renderTimer = setTimeout(() => {
         const isAppleEaten = hasCollision(apple, snake);
-        const newSnake = updateSnake(snake, nextDirection.current, isAppleEaten);
+        const newSnake = updateSnake(snake, state.direction, isAppleEaten);
         setState({
           ...state,
           snake: newSnake,
           apple: isAppleEaten ? generateApple(newSnake) : apple
         });
       }, levels[level].delay)
+    }
+    return () => {
+      clearTimeout(renderTimer)
     }
   }, [apple, snake, state, level])
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PIXEL_SIZE = 50;
+const PIXEL_SIZE = 20;
 
 const gameStyle = ({width, height}) => ({
   width: width*PIXEL_SIZE,
