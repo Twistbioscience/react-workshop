@@ -13,12 +13,8 @@ const gameStyle = ({width, height}) => ({
 const snake = [[0,0], [0,1], [0,2], [0,3]];
 const gameDimensions = {width: 20, height: 20};
 
-const App = () =>
-  <div style={gameStyle(gameDimensions)} className="App">
-    {
-      snake.map(([x, y]) => 
-        <div style={{left: x*PIXEL_SIZE, top: y*PIXEL_SIZE, height: PIXEL_SIZE, width: PIXEL_SIZE, background: 'black', position: 'absolute', zIndex: 90}}/>)
-    }
-  </div>
+
+
+const App = () => <div>Render the snake</div>
 
 export default App;
