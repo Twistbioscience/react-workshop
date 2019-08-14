@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import Snake from './Snake';
 
 const PIXEL_SIZE = 20;
 
@@ -15,6 +16,6 @@ const gameDimensions = {width: 20, height: 20};
 
 
 
-const App = () => <div>Render the snake</div>
+const App = () => <div>This is the game<Snake/></div>
 
 export default App;
