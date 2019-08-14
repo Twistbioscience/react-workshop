@@ -1,8 +1,16 @@
-.app {
-  /* background:rgba(200,255,10,.1); */
-  background:rgba(56,62,37,1);
-  box-shadow:
-    inset 1px 1px 6px 0px #050505,
-    0px 0px 4px 2px #000,
-    0px 0px 4px 2px #777;
+.nokia {
+  height: 100vh;
+  width: 100vw;
+  background-size: 800px 1600px;
+  background-repeat: no-repeat;
+  background-position: center 0px;
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/3/31/Nokia_3310_blue.jpg');
+  position: relative;
+}
+
+.gameboard {
+  position: absolute;
+  background-image: url('http://localhost:3000/background-pattern.png');
+  top: 440px;
+  left: calc(50% - 160px);
 }
